@@ -14,8 +14,8 @@ const PopularVacancies = () => {
   ];
 
   return (
-    <div className='py-16'>
-      <h1 className='text-2xl md:text-5xl font-semibold text-gray-800'>Most Popular Vacancies
+    <section className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16'>
+      <h1 className='text-2xl sm:text-3xl md:text-5xl font-semibold text-gray-800'>Most Popular Vacancies
       </h1>
 
       <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-10'>
@@ -23,7 +23,7 @@ const PopularVacancies = () => {
           const colorClass = colors[index % colors.length];
           return (
           <div key ={index} 
-          className={`flex flex-col max-w-[250px] items-center justify-center gap-1 border border-gray-300 rounded-xl py-6 shadow ${colorClass}`}
+          className={`flex flex-col w-full items-center justify-center gap-1 border border-gray-300 rounded-xl py-6 px-4 text-center shadow ${colorClass}`}
           >
             <h3 className='text-lg font-semibold'>{item.title}</h3>
             <p className='text-sm'>{item.count} open positions</p>
@@ -31,7 +31,7 @@ const PopularVacancies = () => {
           );
         })}
       </div>
-    </div>
+    </section>
   )
 }
 

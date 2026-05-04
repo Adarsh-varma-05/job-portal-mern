@@ -14,11 +14,22 @@ import userRouter from "./routes/userRoutes.js";
 
 const app = express();
 
-const allowedOrigins = [process.env.FRONTEND_URL || "http://localhost:5173"];
+const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
+  .split(",")
+  .map((origin) => origin.trim().replace(/\/$/, ""))
+  .filter(Boolean);
 
 // middlewares
 app.use(express.json());
-app.use(cors({origin: allowedOrigins, credentials: true}));
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
+      return callback(null, true);
+    }
+    return callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  credentials: true,
+}));
 app.use(cookieParser());
 
 // connection to db
@@ -38,6 +49,29 @@ app.use("/category", categoryRouter);
 app.use("/job", jobRouter);
 app.use("/application", applicationRouter);
 app.use("/user", userRouter);
+
+app.use((err, req, res, next) => {
+  console.error("API error:", err);
+
+  if (err.message?.startsWith("CORS blocked")) {
+    return res.status(403).json({
+      success: false,
+      message: "This frontend URL is not allowed by the backend CORS settings",
+    });
+  }
+
+  if (err.name === "MulterError") {
+    return res.status(400).json({
+      success: false,
+      message: err.code === "LIMIT_FILE_SIZE" ? "File size must be under 5MB" : "File upload failed",
+    });
+  }
+
+  return res.status(500).json({
+    success: false,
+    message: "Internal server error",
+  });
+});
 
 const PORT = process.env.PORT || 5000;
 

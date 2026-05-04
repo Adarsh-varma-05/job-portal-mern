@@ -29,9 +29,11 @@ const App = () => {
 
   const adminPath = useLocation().pathname.includes("admin");
   const employerPath = useLocation().pathname.includes("employer");
+  const dashboardPath = adminPath || employerPath;
+
   return (
-    <div className='w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl: max-w-2xl 2xl:max-w-7xl mx-auto px-4'>
-      {adminPath || employerPath ? null : <Navbar />}
+    <div className='min-h-screen w-full overflow-x-hidden bg-white text-gray-900'>
+      {dashboardPath ? null : <Navbar />}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/all-jobs" element={<AllJobs />} />
@@ -70,7 +72,7 @@ const App = () => {
 
 
       </Routes>
-      {adminPath || employerPath ? null : <Footer />}
+      {dashboardPath ? null : <Footer />}
       <Toaster />
     </div>
   )

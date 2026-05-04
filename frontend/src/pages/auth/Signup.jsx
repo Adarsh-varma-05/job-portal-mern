@@ -13,7 +13,7 @@ const Signup = () => {
     name: '',
     email: '',
     password: '',
-    role:'',
+    role:'student',
     image: null,
   });
 
@@ -29,6 +29,8 @@ const Signup = () => {
     if(selectedFile){
       const imageUrl = URL.createObjectURL(selectedFile);
       setPreview(imageUrl);
+    } else {
+      setPreview(null);
     }
   }
 
@@ -40,7 +42,9 @@ const Signup = () => {
       formPayload.append("email",formData.email);
       formPayload.append("password",formData.password);
       formPayload.append("role",formData.role);
-      formPayload.append("image",formData.image);
+      if (formData.image) {
+        formPayload.append("image",formData.image);
+      }
 
       const {data} = await axios.post(
         `${BACKEND_URL}/auth/signup`,
@@ -63,10 +67,10 @@ const Signup = () => {
     }
   }
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4 py-10">
       <form 
       onSubmit={handleSubmit}
-      className="bg-white text-gray-500 max-w-[350px] mx-4 md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10">
+      className="bg-white text-gray-500 w-full max-w-[380px] md:p-6 p-4 text-left text-sm rounded-xl shadow-[0px_0px_10px_0px] shadow-black/10">
         <h2 className="text-2xl font-semibold mb-6 text-center text-gray-800">
           Signup Now
         </h2>
@@ -80,7 +84,6 @@ const Signup = () => {
 
           <input type="file"
           accept='image/*'
-          required
           onChange={handleFileChange}
           className='block w-full text-sm text-gray-500 
           file:mr-4 file:py-2 file:px-4

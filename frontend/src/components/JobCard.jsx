@@ -10,20 +10,20 @@ const JobCard = ({job}) => {
     : assets.google_icon;
   return (
     <div onClick={() => navigate(`/job-details/${job._id}`)}
-    className='p-5 flex flex-col gap-1 rounded-md border border-gray-300 w-auto lg:w-[424px] bg-gradient-to-r from-purple-200/80 cursor-pointer'
+    className='p-5 flex w-full min-w-0 flex-col gap-2 rounded-md border border-gray-300 bg-gradient-to-r from-purple-200/80 cursor-pointer'
     >
-      <h1 className='text-2xl font-medium text-gray-800'>{job.title}</h1>
-      <div className='flex gap-4 items-center'>
+      <h1 className='text-xl sm:text-2xl font-medium text-gray-800 break-words'>{job.title}</h1>
+      <div className='flex flex-wrap gap-3 items-center'>
         <p className='text-sm bg-green-300/40 p-1'>{job.type}</p>
         <p className='text-sm text-gray-800'>{job.salary}</p>
       </div>
-      <div className='flex gap-4 items-center my-2'>
-        <img src={imageUrl} alt="" className='w-[48px] h-[48px] object-cover' />
-        <div className='flex flex-col md:flex-row items-center justify-between text-sm'>
-          <h3>{job.company}</h3>
-          <h3>{job.location}</h3>
+      <div className='flex gap-3 items-center my-2 min-w-0'>
+        <img src={imageUrl} alt="" className='w-12 h-12 shrink-0 object-cover' />
+        <div className='flex min-w-0 flex-1 flex-col text-sm'>
+          <h3 className='truncate'>{job.company}</h3>
+          <h3 className='truncate text-gray-600'>{job.location}</h3>
         </div>
-        <div>
+        <div className='shrink-0'>
           <img src={assets.save_later_icon} alt="" className='w-12 h-12' />
         </div>
       </div>

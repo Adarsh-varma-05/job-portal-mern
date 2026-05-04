@@ -3,11 +3,12 @@ import {assets} from "../assets/assets";
 import { heroData } from '../assets/assets';
 const Hero = () => {
   return (
-    <div className='py-16 bg-[#F1F2F4]' >
-      <div className='flex flex-col md:flex-row items-center justify-between gap-5'>
+    <section className='py-12 md:py-16 bg-[#F1F2F4]' >
+      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+      <div className='flex flex-col md:flex-row items-center justify-between gap-8 md:gap-10'>
         {/* left-section */}
-        <div className='max-w-[450px] w-full flex flex-col px-4 gap-5'>
-          <h1 className='text-2xl md:text-5xl font-semibold text-gray-800'>
+        <div className='max-w-[540px] w-full flex flex-col gap-5 text-center md:text-left'>
+          <h1 className='text-3xl sm:text-4xl md:text-5xl font-semibold text-gray-800'>
             Find a job that suits your interest & skills.</h1>
             <p className='text-sm text-gray-700'>
               {" "}
@@ -16,18 +17,18 @@ const Hero = () => {
         </div>
 
         {/* right-section */}
-        <div>
-          <img src={assets.hero_img} alt="" />
+        <div className='w-full max-w-[560px]'>
+          <img src={assets.hero_img} alt="" className='w-full h-auto' />
         </div>
       </div>
 
 
       {/* hero data section */} 
 
-      <div className='flex flex-wrap items-center justify-center gap-2 mt-10 '>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-10'>
         {heroData.map((item) =>(
           <div key={item._id}
-          className='bg-white w-[270px] h-[112px] flex items-center gap-4 justify-center p-4 shadow-md'>
+          className='bg-white w-full min-h-[112px] flex items-center gap-4 justify-center p-4 shadow-md rounded-md'>
             <img src={item.icon} alt="" />
             <div className='flex flex-col gap-1'>
               <p>{item.count}</p>
@@ -36,7 +37,8 @@ const Hero = () => {
           </div>
         ))}
       </div>
-    </div>
+      </div>
+    </section>
   );
 };
 

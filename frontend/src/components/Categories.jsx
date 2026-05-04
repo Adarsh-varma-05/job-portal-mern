@@ -14,8 +14,8 @@ const Categories = () => {
   ];
   const {categoriesData, BACKEND_URL} = useContext(AppContext);
   return (
-    <div className='py-16'>
-      <h1 className='text-2xl md:text-5xl font-semibold text-gray-800'>Most Popular Categories
+    <section className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16'>
+      <h1 className='text-2xl sm:text-3xl md:text-5xl font-semibold text-gray-800'>Most Popular Categories
       </h1>
       {categoriesData.length === 0 ? (
         <p className='text-gray-400 mt-10 text-center'>No categories available yet.</p>
@@ -29,7 +29,7 @@ const Categories = () => {
               : null;
             return (
               <div key={item._id || index}
-              className={`flex max-w-[250px] items-center justify-center gap-1 border border-gray-300 rounded-xl py-6 shadow ${colorClass}`}
+              className={`flex w-full items-center justify-center gap-3 border border-gray-300 rounded-xl py-6 px-4 text-center shadow ${colorClass}`}
               >
                 {iconUrl && <img src={iconUrl} alt="" className='w-10 h-10 object-cover' />}
                 <div className='flex flex-col items-center justify-center'>
@@ -42,7 +42,7 @@ const Categories = () => {
         }
       </div>
       )}
-    </div>
+    </section>
   )
 }
 
