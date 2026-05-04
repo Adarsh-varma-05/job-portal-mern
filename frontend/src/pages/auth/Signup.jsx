@@ -6,7 +6,6 @@ import toast from 'react-hot-toast';
 const Signup = () => {
   const { navigate, axios, BACKEND_URL } = useContext(AppContext);
 
-  const [file, setFile] = useState(null);
   const [preview, setPreview] = useState(null);
 
   const [formData, setFormData] = useState({
@@ -23,7 +22,6 @@ const Signup = () => {
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
-    setFile(selectedFile);
     setFormData({ ...formData, image: selectedFile });
     
     if(selectedFile){

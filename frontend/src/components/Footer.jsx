@@ -2,7 +2,8 @@ import { assets } from "../assets/assets"
 
 const Footer = () => {
     return (
-        <footer className="my-16 bg-black px-6 pt-8 md:px-16 lg:px-36 w-full text-white">
+        <footer className="mt-16 bg-black w-full text-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
             <div className="flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500 pb-10">
                 <div className="md:max-w-96">
                     <img alt="" className="w-36 h-auto bg-white" src={assets.logo} />
@@ -14,7 +15,7 @@ const Footer = () => {
                         <img src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/refs/heads/main/assets/appDownload/appleStoreBtnBlack.svg" alt="app store" className="h-10 w-auto border border-white rounded" />
                     </div>
                 </div>
-                <div className="flex-1 flex items-start md:justify-end gap-20 md:gap-40">
+                <div className="flex-1 flex flex-col sm:flex-row items-start md:justify-end gap-8 sm:gap-20 md:gap-32">
                     <div>
                         <h2 className="font-semibold mb-5">Company</h2>
                         <ul className="text-sm space-y-2">
@@ -36,6 +37,7 @@ const Footer = () => {
             <p className="pt-4 text-center text-sm pb-5">
                 Copyright {new Date().getFullYear()} © <a href="https://prebuiltui.com">PrebuiltUI</a>. All Right Reserved.
             </p>
+          </div>
         </footer>
     )
 }
