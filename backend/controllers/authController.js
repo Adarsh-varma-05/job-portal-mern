@@ -81,11 +81,6 @@ export const login = async (req , res) => {
         process.env.JWT_SECRET_KEY,
         { expiresIn: "1d" }
       );
-      const token = jwt.sign(
-        { email: process.env.ADMIN_EMAIL},
-        process.env.JWT_SECRET_KEY,
-        { expiresIn: "1d" }
-      );
       res.cookie("token", token, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
