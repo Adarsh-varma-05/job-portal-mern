@@ -32,12 +32,14 @@ app.use((req, res, next) => {
 });
 
 app.use(cors({
-  origin(origin, callback) {
-    if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
-      return callback(null, true);
+  origin: (origin, callback) => {
+    // Allow any Vercel deployment or localhost
+    if (!origin || origin.includes("vercel.app") || origin.includes("localhost")) {
+      callback(null, true);
+    } else {
+      console.error(`Blocked by CORS: ${origin}`);
+      callback(new Error(`CORS blocked for origin: ${origin}`));
     }
-    console.error(`Blocked by CORS: ${origin}`);
-    return callback(new Error(`CORS blocked for origin: ${origin}`));
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
@@ -62,6 +64,14 @@ app.use("/category", categoryRouter);
 app.use("/job", jobRouter);
 app.use("/application", applicationRouter);
 app.use("/user", userRouter);
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `Route not found: ${req.method} ${req.url}`
+  });
+});
 
 app.use((err, req, res, next) => {
   console.error("API error:", err);
