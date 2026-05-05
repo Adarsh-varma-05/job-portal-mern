@@ -1,4 +1,5 @@
 import User from "../models/userModel.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 // Get user profile
 export const getProfile = async (req, res) => {
@@ -25,11 +26,11 @@ export const updateProfile = async (req, res) => {
 
     // Handle profile image
     if (req.files && req.files.profileImage) {
-      updateData.image = req.files.profileImage[0].filename;
+      updateData.image = await uploadToCloudinary(req.files.profileImage[0].buffer, "users");
     }
     // Handle resume
     if (req.files && req.files.resume) {
-      updateData.resume = req.files.resume[0].filename;
+      updateData.resume = await uploadToCloudinary(req.files.resume[0].buffer, "resumes");
     }
 
     const user = await User.findByIdAndUpdate(req.user.id, updateData, {

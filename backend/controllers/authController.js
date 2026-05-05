@@ -1,6 +1,7 @@
 import User from "../models/userModel.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 // register a user 
 
@@ -17,7 +18,10 @@ export const register = async (req , res) => {
       return res.status(400).json({ success: false, message: "Please select a valid role"})
     }
 
-    const image = req.file ? req.file.filename : "";
+    let image = "";
+    if (req.file) {
+      image = await uploadToCloudinary(req.file.buffer, "users");
+    }
     const existingUser = await User.findOne({email: normalizedEmail});
     if(existingUser) {
       return res.status(409).json({ success: false, message: "User already exists"})

@@ -1,4 +1,5 @@
 import Job from "../models/jobModel.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 // Create a job (employer)
 export const createJob = async (req, res) => {
@@ -21,7 +22,10 @@ export const createJob = async (req, res) => {
       return res.json({ success: false, message: "Required fields are missing" });
     }
 
-    const image = req.file ? req.file.filename : "";
+    let image = "";
+    if (req.file) {
+      image = await uploadToCloudinary(req.file.buffer, "jobs");
+    }
 
     // Parse requirements and benefits from comma-separated strings
     const requirementsArray = requirements

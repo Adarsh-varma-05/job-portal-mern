@@ -1,4 +1,5 @@
 import Company from "../models/companyModel.js";
+import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 // Create a company
 export const createCompany = async (req, res) => {
@@ -7,7 +8,10 @@ export const createCompany = async (req, res) => {
     if (!name) {
       return res.json({ success: false, message: "Company name is required" });
     }
-    const logo = req.file ? req.file.filename : "";
+    let logo = "";
+    if (req.file) {
+      logo = await uploadToCloudinary(req.file.buffer, "companies");
+    }
     const company = await Company.create({
       name,
       about,
