@@ -6,6 +6,7 @@ import { uploadToCloudinary } from "../utils/cloudinary.js";
 // register a user 
 
 export const register = async (req , res) => {
+  console.log("DEBUG - Registration started", { email: req.body.email, role: req.body.role });
   try {
     const { name, email, password, role = "student" } = req.body;
     const normalizedEmail = email?.trim().toLowerCase();
@@ -39,6 +40,7 @@ export const register = async (req , res) => {
     const userData = user.toObject();
     delete userData.password;
 
+    console.log("DEBUG - Registration successful", { userId: user._id });
     return res.json({
        success: true,
        message: "User registered successfully",
@@ -57,6 +59,7 @@ export const register = async (req , res) => {
 
 export const login = async (req , res) => {
   const { email, password } = req.body;
+  console.log("DEBUG - Login attempt", { email });
   const normalizedEmail = email?.trim().toLowerCase();
   try {
     if (!normalizedEmail || !password) {
@@ -78,12 +81,18 @@ export const login = async (req , res) => {
         process.env.JWT_SECRET_KEY,
         { expiresIn: "1d" }
       );
+      const token = jwt.sign(
+        { email: process.env.ADMIN_EMAIL},
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: "1d" }
+      );
       res.cookie("token", token, {
         httpOnly: true,
         maxAge: 24 * 60 * 60 * 1000,
         secure: process.env.NODE_ENV === "production",
         sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       });
+      console.log("DEBUG - Admin login successful");
       return res.json({
         success:true,
         message: "Admin login successfully",
@@ -109,6 +118,7 @@ export const login = async (req , res) => {
     secure: process.env.NODE_ENV === "production",
     sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
   });
+  console.log("DEBUG - User login successful", { userId: user._id });
   return res.json({
     success: true,
     message: "User login successfully",

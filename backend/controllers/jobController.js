@@ -3,6 +3,7 @@ import { uploadToCloudinary } from "../utils/cloudinary.js";
 
 // Create a job (employer)
 export const createJob = async (req, res) => {
+  console.log("DEBUG - Creating job", { title: req.body.title, employer: req.user?.id });
   try {
     const {
       title,
@@ -52,6 +53,7 @@ export const createJob = async (req, res) => {
       employer: req.user.id,
     });
 
+    console.log("DEBUG - Job created successfully", { jobId: job._id });
     return res.json({
       success: true,
       message: "Job posted successfully",
@@ -65,8 +67,10 @@ export const createJob = async (req, res) => {
 
 // Get all jobs
 export const getAllJobs = async (req, res) => {
+  console.log("DEBUG - Fetching all jobs");
   try {
     const jobs = await Job.find().sort({ createdAt: -1 });
+    console.log(`DEBUG - Successfully fetched ${jobs.length} jobs`);
     return res.json({ success: true, jobs });
   } catch (error) {
     return res.json({ success: false, message: "Internal server error" });
