@@ -1,9 +1,8 @@
+import "dotenv/config";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import dotenv from "dotenv";
 import { connectDB } from "./config/connectDB.js";
-dotenv.config();
 
 import authRouter from "./routes/authRoutes.js";
 import companyRouter from "./routes/companyRoutes.js";
@@ -13,11 +12,6 @@ import applicationRouter from "./routes/applicationRoutes.js";
 import userRouter from "./routes/userRoutes.js";
 
 const app = express();
-
-const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
-  .split(",")
-  .map((origin) => origin.trim().replace(/\/$/, ""))
-  .filter(Boolean);
 
 // middlewares
 app.use(express.json());
@@ -32,15 +26,7 @@ app.use((req, res, next) => {
 });
 
 app.use(cors({
-  origin: (origin, callback) => {
-    // Allow any Vercel deployment or localhost
-    if (!origin || origin.includes("vercel.app") || origin.includes("localhost")) {
-      callback(null, true);
-    } else {
-      console.error(`Blocked by CORS: ${origin}`);
-      callback(new Error(`CORS blocked for origin: ${origin}`));
-    }
-  },
+  origin: true,
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
