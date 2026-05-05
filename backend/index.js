@@ -21,6 +21,16 @@ const allowedOrigins = (process.env.FRONTEND_URL || "http://localhost:5173")
 
 // middlewares
 app.use(express.json());
+
+// Debugger/Logger middleware
+app.use((req, res, next) => {
+  console.log(`[${new Date().toISOString()}] ${req.method} ${req.url}`);
+  if (Object.keys(req.body).length > 0) {
+    console.log("Body:", JSON.stringify(req.body, null, 2));
+  }
+  next();
+});
+
 app.use(cors({
   origin(origin, callback) {
     if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) {
