@@ -60,7 +60,14 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.error("API error:", err);
+  console.error("DEBUG - API Error Stack:", err.stack);
+  console.error("DEBUG - Request Info:", {
+    method: req.method,
+    url: req.url,
+    body: req.body,
+    params: req.params,
+    query: req.query
+  });
 
   if (err.message?.startsWith("CORS blocked")) {
     return res.status(403).json({
@@ -79,6 +86,7 @@ app.use((err, req, res, next) => {
   return res.status(500).json({
     success: false,
     message: "Internal server error",
+    error: err.message, // Temporarily expose error message for debugging
   });
 });
 
