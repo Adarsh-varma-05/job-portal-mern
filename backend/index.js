@@ -44,6 +44,10 @@ app.get("/", (req, res) =>{
   res.send("Job Portal API is running");
 });
 
+app.get("/health", (req, res) => {
+  res.json({ success: true, message: "Server is healthy" });
+});
+
 app.use("/auth", authRouter);
 app.use("/company", companyRouter);
 app.use("/category", categoryRouter);
@@ -64,10 +68,13 @@ app.use((err, req, res, next) => {
   console.error("DEBUG - Request Info:", {
     method: req.method,
     url: req.url,
+    origin: req.headers.origin,
     body: req.body,
-    params: req.params,
-    query: req.query
   });
+
+  // Force CORS headers in case of error
+  res.header("Access-Control-Allow-Origin", req.headers.origin || "*");
+  res.header("Access-Control-Allow-Credentials", "true");
 
   if (err.message?.startsWith("CORS blocked")) {
     return res.status(403).json({
