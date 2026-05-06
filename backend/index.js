@@ -33,9 +33,6 @@ app.use(cors({
 }));
 app.use(cookieParser());
 
-// connection to db
-connectDB();
-
 // Serve uploaded files statically
 app.use("/uploads", express.static("uploads"));
 

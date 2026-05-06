@@ -1,0 +1,30 @@
+services:
+  - type: web_service
+    name: job-portal-backend
+    env: node
+    branch: main
+    plan: starter
+    buildCommand: npm install
+    startCommand: npm start
+    repoDir: backend
+    envVars:
+      - key: MONGO_URL
+        value: "${MONGO_URL}"
+      - key: JWT_SECRET
+        value: "${JWT_SECRET}"
+      - key: CLOUDINARY_CLOUD_NAME
+        value: "${CLOUDINARY_CLOUD_NAME}"
+      - key: CLOUDINARY_API_KEY
+        value: "${CLOUDINARY_API_KEY}"
+      - key: CLOUDINARY_API_SECRET
+        value: "${CLOUDINARY_API_SECRET}"
+  - type: static_site
+    name: job-portal-frontend
+    branch: main
+    plan: free
+    repoDir: frontend
+    buildCommand: npm install && npm run build
+    publishPath: dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        value: "${VITE_BACKEND_URL}"
