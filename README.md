@@ -19,6 +19,26 @@ This repository contains a split MERN application:
    - Frontend: `http://localhost:3000`
    - Backend: `http://localhost:5000/health`
 
+## Local development without Docker
+
+1. In the frontend folder, copy `frontend/.env.example` to `frontend/.env`
+2. If your backend runs on a different port, update `VITE_BACKEND_URL` accordingly.
+   - Example: `VITE_BACKEND_URL=http://localhost:4000`
+3. Start backend first:
+   ```bash
+   cd backend
+   npm install
+   npm start
+   ```
+4. Start frontend next:
+   ```bash
+   cd ../frontend
+   npm install
+   npm run dev
+   ```
+5. Open:
+   - `http://localhost:3000`
+
 ## How it works
 
 - The backend runs from `backend/` on port `5000`
