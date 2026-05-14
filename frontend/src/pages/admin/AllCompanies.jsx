@@ -1,7 +1,7 @@
 import React, { useContext, useEffect } from 'react'
 import { AppContext } from '../../context/AppContext'
 
-const AllComapnies = () => {
+const AllCompanies = () => {
   const {companyData, fetchAllCompanies, BACKEND_URL} = useContext(AppContext);
 
   useEffect(() => {
@@ -54,4 +54,4 @@ const AllComapnies = () => {
   );
 };
 
-export default AllComapnies;
+export default AllCompanies;

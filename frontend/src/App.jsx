@@ -19,7 +19,7 @@ import JobList from './pages/employer/JobList'
 import Applicants from './pages/employer/Applicants'
 import CategoriesList from './pages/admin/CategoriesList'
 import AddCategory from './pages/admin/AddCategory'
-import AllComapnies from './pages/admin/AllComapnies'
+import AllCompanies from './pages/admin/AllCompanies'
 import AllApplication from './pages/admin/AllApplication'
 import AllUsers from './pages/admin/AllUsers'
 import Jobs from './pages/admin/Jobs'
@@ -61,7 +61,7 @@ const App = () => {
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<CategoriesList />} />
           <Route path='add-category' element={<AddCategory />}/>
-          <Route path='all-companies' element={<AllComapnies />}/>
+          <Route path='all-companies' element={<AllCompanies />}/>
           <Route path='all-applications' element={<AllApplication />}/>
           <Route path='all-users' element={<AllUsers />}/>
           <Route path='jobs' element={<Jobs />}/>
